@@ -1,11 +1,11 @@
 # API Recettes – Node.js & Express
 
-## Description
+## Description  
 L'objectif est de créer une API Restful qui permettra de réaaliser des opérations CRUD (Create, Read, Update, Delete) sur des recettes de cuisine.
 La base de données n'aura pas de relations. Une table utilisateurs permettra de gérer la sécurisation de notre API. Et une table recette permettra de stocker les recettes.
 ---
 
-## Fonctionnalités actuelles
+## Fonctionnalités actuelles  
 - Initialisation automatique de la base SQLite au démarrage.  
 - Création des tables :
   - `users` (nom, email, mot de passe)
@@ -37,3 +37,7 @@ npm run dev
 - POST /recettes  
 - PUT /recettes/:id  
 - DELETE /recettes/:id  
+
+## Mise à jour BDD  
+Le script db/migrate.js gère les évolutions du schéma SQLite.  
+Il permet d’ajouter automatiquement les nouvelles colonnes ou ajustements nécessaires sans perte de données existantes.  

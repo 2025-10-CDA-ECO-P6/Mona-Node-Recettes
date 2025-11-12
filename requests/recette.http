@@ -33,7 +33,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vb
 
 
 ### Modifier une recette existante (par ID)
-PUT http://localhost:3000/recettes/5
+PUT http://localhost:3000/recettes/2
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbmEiLCJpYXQiOjE3NjI5MzQ5MzQsImV4cCI6MTc2MjkzODUzNH0.6h17KZr3K5Nha-Ai6khVx42MZzqxQKsDCRLs-8LJwU4
 

@@ -17,7 +17,7 @@ export async function getRecetteById(req, res) {
 }
 
 export async function createRecette(req, res) {
-  const { titre, temps_preparation, difficulte, budget, description } = req.body;
+  const { titre, temps_preparation, difficulte, budget, description, ingredients } = req.body;
 
   if (!titre) {
     return res.status(400).json({ message: "Le champ 'titre' est obligatoire" });
@@ -25,21 +25,30 @@ export async function createRecette(req, res) {
 
   const db = await openDb();
   const result = await db.run(
-    "INSERT INTO recettes (titre, temps_preparation, difficulte, budget, description, ingredients) VALUES (?, ?, ?, ?, ?, ?)",
-    [titre, temps_preparation, difficulte, budget, description]
+    `INSERT INTO recettes (titre, temps_preparation, difficulte, budget, description, ingredients)
+     VALUES (?, ?, ?, ?, ?, ?)`,
+    [titre, temps_preparation, difficulte, budget, description, ingredients]
   );
 
-  res.status(201).json({ id: result.lastID, titre, temps_preparation, difficulte, budget, description });
+  res.status(201).json({
+    id: result.lastID,
+    titre,
+    temps_preparation,
+    difficulte,
+    budget,
+    description,
+    ingredients,
+  });
 }
 
 export async function updateRecette(req, res) {
   const { id } = req.params;
-  const { titre, temps_preparation, difficulte, budget, description } = req.body;
+  const { titre, temps_preparation, difficulte, budget, description , ingredients } = req.body;
   const db = await openDb();
 
   const result = await db.run(
-    "UPDATE recettes SET titre = ?, temps_preparation = ?, difficulte = ?, budget = ?, description = ? WHERE id = ?",
-    [titre, temps_preparation, difficulte, budget, description, id]
+    "UPDATE recettes SET titre = ?, temps_preparation = ?, difficulte = ?, budget = ?, description = ?, ingredients = ? WHERE id = ?",
+    [titre, temps_preparation, difficulte, budget, description, ingredients, id]
   );
 
   if (result.changes === 0) {
