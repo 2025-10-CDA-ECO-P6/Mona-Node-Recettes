@@ -50,6 +50,7 @@ export async function updateRecette(req, res) {
     "UPDATE recettes SET titre = ?, temps_preparation = ?, difficulte = ?, budget = ?, description = ?, ingredients = ? WHERE id = ?",
     [titre, temps_preparation, difficulte, budget, description, ingredients, id]
   );
+  
 
   if (result.changes === 0) {
     return res.status(404).json({ message: "Recette non trouvée" });

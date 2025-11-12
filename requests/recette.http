@@ -3,8 +3,19 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "username": "mona",
-  "password": "toto"
+  "email": "alice@example.com",
+  "password": "password123"
+}
+
+
+### New user inscription
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "nom": "TI",
+  "email": "ti@example.com",
+  "password": "titi"
 }
 
 ### Obtenir la liste de toutes les recettes
