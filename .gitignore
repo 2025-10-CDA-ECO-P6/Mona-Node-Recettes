@@ -1,0 +1,31 @@
+# --- Node.js ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+.env
+
+# --- Build / cache ---
+.DS_Store
+dist/
+build/
+.cache/
+.tmp/
+coverage/
+.vscode/
+.idea/
+*.log
+
+# --- SQLite ---
+*.db
+*.sqlite
+*.sqlite3
+/db/*.db
+/db/*.sqlite
+
+# --- OS system files ---
+Thumbs.db
+*.swp
+*.swo

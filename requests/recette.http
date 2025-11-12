@@ -1,0 +1,54 @@
+### Obtenir Bearer
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "mona",
+  "password": "toto"
+}
+
+### Obtenir la liste de toutes les recettes
+GET http://localhost:3000/recettes
+Content-Type: application/json
+
+
+### Obtenir une recette précise (par ID)
+GET http://localhost:3000/recettes/4
+Content-Type: application/json
+
+
+### Créer une nouvelle recette (requiert JWT)
+POST http://localhost:3000/recettes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbmEiLCJpYXQiOjE3NjI5MzQ5MzQsImV4cCI6MTc2MjkzODUzNH0.6h17KZr3K5Nha-Ai6khVx42MZzqxQKsDCRLs-8LJwU4
+
+{
+  "titre": "Poulet au curry",
+  "temps_preparation": 30,
+  "difficulte": 2,
+  "budget": 2,
+  "description": "Un plat simple à base de poulet, oignons, crème et poudre de curry.",
+  "ingredients": "Test ingredients"
+}
+
+
+### Modifier une recette existante (par ID)
+PUT http://localhost:3000/recettes/5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbmEiLCJpYXQiOjE3NjI5MzQ5MzQsImV4cCI6MTc2MjkzODUzNH0.6h17KZr3K5Nha-Ai6khVx42MZzqxQKsDCRLs-8LJwU4
+
+{
+  "budget": 3,
+  "titre": "Poulet au curry amélioré",
+  "description": "Ajout de lait de coco et d'épices thaïes.",
+  "ingredients": "Test ingredients"
+}
+
+
+### Supprimer une recette (par ID)
+DELETE http://localhost:3000/recettes/18
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbmEiLCJpYXQiOjE3NjI3ODM3OTQsImV4cCI6MTc2Mjc4NzM5NH0.w2wHq1az2w9WusMOp-dTEKyP_r79KuHHgxbIpKS5jZA
+
+### Déconnexion (logout)
+GET http://localhost:3000/auth/logout
