@@ -1,19 +1,21 @@
-### REGISTER
-POST http://localhost:1337/auth/register
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJmaWZpQHRlc3QuY29tIiwiaWF0IjoxNzYzMTIwNDI4LCJleHAiOjE3NjMxMjQwMjh9.Od1hha1c9xK-RjlQpvjcrA96X4Wx-6yg7G83YSARlt8
+
+### REGISTER (fonctionne)
+POST http://localhost:1337/auth/local/register
 Content-Type: application/json
 
 {
   "nom": "tutu",
-  "email": "tutu@test.com",
+  "email": "fifi@test.com",
   "password": "test"
 }
 
-### LOGIN
-POST http://localhost:1337/auth/login
+### LOGIN (fonctionne)
+POST http://localhost:1337/auth/local
 Content-Type: application/json
 
 {
-  "email": "tutu@test.com",
+  "email": "fifi@test.com",
   "password": "test"
 }
 
@@ -21,14 +23,20 @@ Content-Type: application/json
 GET http://localhost:1337/api/recettes
 Content-Type: application/json
 
-### Obtenir la liste des ingrédients
+
+### Obtenir un ingredient
+GET http://localhost:1337/api/ingredients/1
+Content-Type: application/json
+
+
+### Obtenir la liste des ingrédients (fonctionne) 
 GET http://localhost:1337/api/ingredients
 Content-Type: application/json
 
 ### Creer un ingredient
 POST http://localhost:1337/api/ingredients
 Content-Type: application/json
-Authorization: Bearer eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ0dXR1QHRlc3QuY29tIiwiaWF0IjoxNzYzMTE2MjY1LCJleHAiOjE3NjMxMTk4NjV9.w3r1yZi9zaZ17lBKgf5YDdeep34jsvmswqcNpGzBpC8
+Authorization: Bearer {{token}}
 
 {
   "data": {
@@ -41,42 +49,43 @@ GET http://localhost:1337/api/recettes/39ab41bd-dcb9-42b5-b16a-8e24c47041e5
 Content-Type: application/json
 
 
-### Créer une nouvelle recette 
+### Créer une nouvelle recette  (fonctionne)
 POST http://localhost:1337/api/recettes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ0dXR1QHRlc3QuY29tIiwiaWF0IjoxNzYzMTE2MjY1LCJleHAiOjE3NjMxMTk4NjV9.w3r1yZi9zaZ17lBKgf5YDdeep34jsvmswqcNpGzBpC8
+Authorization: Bearer {{token}}
 
 {
-  "titre": "TUTU",
-  "temps_preparation": 30,
-  "difficulte": 2,
-  "budget": 2,
-  "description": "Un plat simple à base de poulet, oignons, crème et curry."
+  "data": {
+    "titre": "test data table",
+    "temps_preparation": 30,
+    "difficulte": 2,
+    "budget": 2,
+    "description": "Un plat simple à base de poulet, oignons, crème et poudre de curry."
+  }
 }
 
 ### Mise à  jour ingredients d'une recette
-PUT http://localhost:1337/api/recettes/sa9wsvo3p3b7wai96osljt06
+PUT http://localhost:1337/api/recettes/dd82ffbe-9aa0-4509-902a-59e72f05330b
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYyNzcxMjg0LCJleHAiOjE3NjUzNjMyODR9.ig6Z_q5JQfa_LJBtK4sqPWNwclAC-adH2qLK5vmHADM
-
+Authorization: Bearer {{token}}
 {
   "data": {
     "ingredient": [4]
   }
 }
 
-### Modifier une recette existante (documentId)
-PUT http://localhost:1337/api/recettes/p2h48oas0ky58fqxv59h6uct
+### Modifier une recette existante (documentId) (fontionne)
+PUT http://localhost:1337/api/recettes/dd82ffbe-9aa0-4509-902a-59e72f05330b
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "data": {
-    "budget": 3
+    "budget": 55
   }
 }
 
-
-### Supprimer une recette (documentId)
-DELETE http://localhost:1337/api/recettes/wnrxapull7t9uoxv9oy7pc7c
+### Supprimer une recette (documentId) (fonctionne)
+DELETE http://localhost:1337/api/recettes/39ab41bd-dcb9-42b5-b16a-8e24c47041e5
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYyNzcxMjg0LCJleHAiOjE3NjUzNjMyODR9.ig6Z_q5JQfa_LJBtK4sqPWNwclAC-adH2qLK5vmHADM
+Authorization: Bearer {{token}}

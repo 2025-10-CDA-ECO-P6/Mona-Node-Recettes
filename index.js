@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { openDb } from "./db/database.js";
 import recettesRoutes from "./routes/recettesRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import ingredientsRoutes from "./routes/ingredientsRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,7 @@ app.use(cookieParser());
 // Routes publiques
 app.use("/auth", authRoutes);
 app.use("/api/recettes", recettesRoutes);
+app.use("/api/ingredients", ingredientsRoutes);
 
 app.get("/", (req, res) => {
   res.send("OK");
@@ -41,11 +43,29 @@ openDb().then(async (db) => {
       temps_preparation INTEGER,
       difficulte INTEGER,
       budget INTEGER,
-      description TEXT,
-      ingredients TEXT
+      description TEXT
     );
   `);
 
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS ingredients (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nom_ingredient TEXT UNIQUE NOT NULL
+    );
+  `);
+
+
+  await db.exec(`
+  CREATE TABLE IF NOT EXISTS recette_ingredients (
+    recette_id INTEGER NOT NULL,
+    ingredient_id INTEGER NOT NULL,
+    PRIMARY KEY (recette_id, ingredient_id),
+    FOREIGN KEY (recette_id) REFERENCES recettes(id) ON DELETE CASCADE,
+    FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
+  );
+  `);
+
+  
   app.listen(PORT, () => {
     console.log(`Serveur lancé sur http://localhost:${PORT}`);
   });

@@ -6,7 +6,7 @@ import { openDb } from "../db/database.js";
 const router = express.Router();
 
 // REGISTER
-router.post("/register", async (req, res) => {
+router.post("/local/register", async (req, res) => {
   const { nom, email, password } = req.body;
 
   if (!nom || !email || !password) {
@@ -35,7 +35,7 @@ router.post("/register", async (req, res) => {
 
 
 // LOGIN
-router.post("/login", async (req, res) => {
+router.post("/local", async (req, res) => {
   const { email, password } = req.body;
 
   const db = await openDb();

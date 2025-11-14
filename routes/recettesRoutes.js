@@ -14,9 +14,8 @@ const router = express.Router();
 router.get("/", getRecettes);
 router.get("/:documentId", getRecetteByDocumentId);
 
-
 router.post("/", auth, createRecette);
-router.put("/:id", auth, updateRecette);
-router.delete("/:id", auth, deleteRecette);
+router.put("/:documentId", auth, updateRecette);
+router.delete("/:documentId", auth, deleteRecette);
 
 export default router;
