@@ -1,0 +1,10 @@
+node_modules
+db/recettes.db
+requests/*
+.nvmrc
+.DS_Store
+.vscode
+.git
+.dockerignore
+.gitignore
+Dockerfile

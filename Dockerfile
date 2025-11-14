@@ -1,12 +1,9 @@
-FROM node:18-alpine
-
+FROM node:22.21.1-alpine
 WORKDIR /app
-
-COPY package*.json ./
+COPY package.json ./
 RUN npm install
-
 COPY . .
-
-EXPOSE 3000
+RUN node db/database.js
+EXPOSE 1337
 
 CMD ["node", "index.js"]
