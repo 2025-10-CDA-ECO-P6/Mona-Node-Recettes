@@ -7,14 +7,14 @@ import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 const app = express();
-const PORT = 3000;
+const PORT = 1337;
 
 app.use(express.json());
 app.use(cookieParser());
 
 // Routes publiques
 app.use("/auth", authRoutes);
-app.use("/recettes", recettesRoutes);
+app.use("/api/recettes", recettesRoutes);
 
 app.get("/", (req, res) => {
   res.send("OK");
@@ -36,6 +36,7 @@ openDb().then(async (db) => {
   await db.exec(`
     CREATE TABLE IF NOT EXISTS recettes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      documentId TEXT UNIQUE NOT NULL,
       titre TEXT NOT NULL,
       temps_preparation INTEGER,
       difficulte INTEGER,

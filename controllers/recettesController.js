@@ -1,4 +1,5 @@
 import { openDb } from "../db/database.js";
+import { v4 as uuidv4 } from "uuid";
 
 export async function getRecettes(req, res) {
   const db = await openDb();
@@ -6,10 +7,10 @@ export async function getRecettes(req, res) {
   res.json(recettes);
 }
 
-export async function getRecetteById(req, res) {
-  const { id } = req.params;
+export async function getRecetteByDocumentId(req, res) {
+  const { documentId } = req.params;
   const db = await openDb();
-  const recette = await db.get("SELECT * FROM recettes WHERE id = ?", [id]);
+  const recette = await db.get("SELECT * FROM recettes WHERE documentId = ?", [documentId]);
   if (!recette) {
     return res.status(404).json({ message: "Recette non trouvée" });
   }
@@ -23,21 +24,34 @@ export async function createRecette(req, res) {
     return res.status(400).json({ message: "Le champ 'titre' est obligatoire" });
   }
 
+  const documentId = uuidv4(); 
+
   const db = await openDb();
-  const result = await db.run(
-    `INSERT INTO recettes (titre, temps_preparation, difficulte, budget, description, ingredients)
-     VALUES (?, ?, ?, ?, ?, ?)`,
-    [titre, temps_preparation, difficulte, budget, description, ingredients]
+
+  await db.run(
+    `INSERT INTO recettes (documentId, titre, temps_preparation, difficulte, budget, description, ingredients)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [
+      documentId,
+      titre,
+      temps_preparation,
+      difficulte,
+      budget,
+      description,
+      ingredients
+    ]
   );
 
-  res.status(201).json({
-    id: result.lastID,
-    titre,
-    temps_preparation,
-    difficulte,
-    budget,
-    description,
-    ingredients,
+  return res.status(201).json({
+    data: {
+      documentId,
+      titre,
+      temps_preparation,
+      difficulte,
+      budget,
+      description,
+      ingredients
+    }
   });
 }
 

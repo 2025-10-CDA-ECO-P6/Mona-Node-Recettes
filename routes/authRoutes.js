@@ -5,6 +5,7 @@ import { openDb } from "../db/database.js";
 
 const router = express.Router();
 
+// REGISTER
 router.post("/register", async (req, res) => {
   const { nom, email, password } = req.body;
 
@@ -14,22 +15,26 @@ router.post("/register", async (req, res) => {
 
   const db = await openDb();
 
-  // Vérifie email existe déjà
+  // Vérifie si l'email existe déjà
   const existingUser = await db.get("SELECT * FROM users WHERE email = ?", [email]);
   if (existingUser) {
-    return res.status(400).json({ message: "Invalide" });
+    return res.status(400).json({ message: "Email déjà utilisé" });
   }
 
-  // Hash MDP
+  // Hash du MDP
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Nouveau user
-  await db.run("INSERT INTO users (nom, email, mdp) VALUES (?, ?, ?)", [nom, email, hashedPassword]);
+  // Insertion du user
+  await db.run(
+    "INSERT INTO users (nom, email, mdp) VALUES (?, ?, ?)",
+    [nom, email, hashedPassword]
+  );
 
-  res.status(201).json({ message: "Invalides" });
+  return res.status(201).json({ message: "Utilisateur créé avec succès" });
 });
 
 
+// LOGIN
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -37,27 +42,26 @@ router.post("/login", async (req, res) => {
   const user = await db.get("SELECT * FROM users WHERE email = ?", [email]);
 
   if (!user) {
-    return res.status(401).json({ message: "Invalide" });
+    return res.status(401).json({ message: "Identifiants invalides" });
   }
 
-  // Vérifie mdp
   const isMatch = await bcrypt.compare(password, user.mdp);
+
   if (!isMatch) {
-    return res.status(401).json({ message: "Invalide" });
+    return res.status(401).json({ message: "Identifiants invalides" });
   }
 
-  // token JWT
-  const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
+  // Token JWT
+  const token = jwt.sign(
+    { id: user.id, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" }
+  );
 
-  res.json({
-    message: "Connexion réussie",
-    token,
-  });
+  res.json({ message: "Connexion réussie", token });
 });
 
-
+// LOGOUT
 router.get("/logout", (req, res) => {
   res.json({ message: "Déconnecté avec succès" });
 });

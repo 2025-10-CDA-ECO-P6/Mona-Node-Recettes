@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getRecettes,
-  getRecetteById,
+  getRecetteByDocumentId,
   createRecette,
   updateRecette,
   deleteRecette,
@@ -12,7 +12,7 @@ const router = express.Router();
 
 
 router.get("/", getRecettes);
-router.get("/:id", getRecetteById);
+router.get("/:documentId", getRecetteByDocumentId);
 
 
 router.post("/", auth, createRecette);
